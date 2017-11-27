@@ -9,9 +9,24 @@
 <html>
 <head>
     <title>逗比波波</title>
+    <%--判断所填的信息是否符合要求--%>
+    <script type="text/javascript">
+        function check(form) {
+            if(document.forms.theLogin.username.value == "") {
+                alert("请输入用户名");
+                document.forms.theLogin.username.focus();
+                return false;
+            }
+            if(document.forms.theLogin.password.value == "") {
+                alert("请输入密码");
+                document.forms.theLogin.password.focus();
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
-<form action="dologin.jsp" method="post">
+<form action="LoginServlet" method="post" name="theLogin">
     <table>
         <caption>用户登录</caption>
         <tr>
@@ -32,7 +47,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <button type="submit">登录</button>
+                <button type="submit" name="submit" onclick="return check(this)">登录</button>
             </td>
         </tr>
     </table>

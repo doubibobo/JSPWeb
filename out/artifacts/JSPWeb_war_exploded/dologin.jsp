@@ -20,7 +20,7 @@
         out.println(request.getParameter("username"));
         out.println(request.getParameter("password"));
         out.println(request.getRemoteAddr());
-        String site = new String("http://www.doubibobo.cn");
+        String site = new String("http://www.doubibobo.cn/blogs/");
         response.setStatus(response.SC_MOVED_TEMPORARILY);
         response.setHeader("Location", site);
     %>
