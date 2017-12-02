@@ -75,11 +75,11 @@ public class userBeans {
                         if(password.equals(pwd)){
                             return true;
                         } else {
-                            continue;
+                            return false;
                         }
                     }
                 } else {
-                    return false;
+                    continue;
                 }
             }
         } catch (SQLException e){
