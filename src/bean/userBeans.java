@@ -2,11 +2,11 @@ package bean;
 import Database.Conn;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.SQLException
 
 /**
  * Created by zhuch on 2017/11/20.
- */
+ */;
 public class userBeans {
     public String username;
     public String password;
