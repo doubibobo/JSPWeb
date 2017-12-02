@@ -1,0 +1,40 @@
+[{
+    "student":{
+            "student" => [
+                    "sid", "name", "password", "sex", "qq", "tel", "province"
+                ]
+        },
+    "course":{
+            "elective_course" => [
+                    "eid", "cname", "day"
+                ]
+        },
+    "interests":{
+            "interest" => [
+                    "intid", "interest"
+                ]
+        },
+    "character":{
+            "character" => [
+                    "cid", "character"
+                ]
+        },
+    "student_character":{
+            "stu_cha" => [
+                    "cid", "sid"
+                ]
+        },
+    "student_course":{
+            "stu_ele_course" => [
+                     "eid", "sid"
+                ]
+        },
+    "student_interests":{
+            "stu_int" => [
+                    "intid", "sid"
+                ]
+        },
+    "dbConfiger":{
+            "class_one", "class_two"
+    }
+}]

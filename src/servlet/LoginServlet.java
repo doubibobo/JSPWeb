@@ -7,7 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import Config.getConfig;
+import Config.getEveryConfig;
+import Config.keyValuePair;
 import bean.userBeans;
 
 /**
@@ -26,7 +30,15 @@ public class LoginServlet extends HttpServlet {
 
         String forward = "";
 
-        userBeans theUser = new userBeans();
+        getEveryConfig everyConfig = new getEveryConfig();
+        String[] allDbConfiger = null;
+        allDbConfiger = everyConfig.getAllDbConfiger();
+
+        for (String i:allDbConfiger) {
+            System.out.println(i);
+        }
+
+        userBeans theUser = new userBeans("student", allDbConfiger);
         theUser.setUsername(username);
         theUser.setPassword(password);
         log(username);

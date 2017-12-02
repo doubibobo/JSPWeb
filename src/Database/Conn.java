@@ -4,6 +4,9 @@ import com.sun.org.apache.regexp.internal.RE;
 
 import java.sql.*;
 import java.io.*;
+import java.util.ArrayList;
+
+import Config.*;
 
 /**
  * Created by zhuch on 2017/11/20.
@@ -16,21 +19,22 @@ public class Conn {
     public Connection connection;
     public Statement statement;
     public String url;
+    public keyValuePair theConfig;
 
     public ResultSet resultSet;
     public String dataTable;
+    public String dataBase;
+
     static {
         driver = "com.mysql.jdbc.Driver";
         username = "doubibobo";
         password = "12151618";
     }
     // 构造函数
-    public Conn(String dataTable) {
-        url = "jdbc:mysql://localhost:3306/class_two";
-        System.out.println(driver);
+    public Conn(String dataTable, String dataBase) {
+        this.dataBase = dataBase;
+        url = "jdbc:mysql://localhost:3306/"+this.dataBase;
         System.out.println(url);
-        System.out.println(username);
-        System.out.println(password);
         try {
             Class.forName(driver);
             System.out.println("成功加载驱动！");
