@@ -70,9 +70,9 @@ public class getConfig {
             list.add(new keyValuePair(theMiddleArray[0], theMiddleArray[1]));
         }
 
-        for (keyValuePair pair:list) {
-            System.out.println(pair.key + "=>" + pair.value);
-        }
+//        for (keyValuePair pair:list) {
+//            System.out.println(pair.key + "=>" + pair.value);
+//        }
         return list;
     }
 }

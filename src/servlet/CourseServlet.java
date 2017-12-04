@@ -1,7 +1,7 @@
 package servlet;
 
 import Config.getEveryConfig;
-import Database.User;
+import bean.CourseListBeans;
 import bean.UserListBeans;
 import bean.userBeans;
 
@@ -13,16 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhuch on 2017/11/27.
+ * Created by zhuch on 2017/12/4.
  */
-@WebServlet(name = "MemberServlet")
-public class MemberServlet extends HttpServlet {
+@WebServlet(name = "CourseServlet")
+public class CourseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 设置HTTP响应的文档类型，此处为Text/html
         response.setContentType("text/html");
@@ -43,30 +42,32 @@ public class MemberServlet extends HttpServlet {
 
         int whileDatabase;
         whileDatabase = database.equals("0") ? 0 : 1;
-        ResultSet resultSet = theUser.selectAll(whileDatabase);
-        String forward = "member.jsp";
-        List<UserListBeans> userListBeans = new ArrayList<UserListBeans>();
-        UserListBeans every = null;
+        ResultSet resultSet = theUser.selectAllCourse(whileDatabase);
+        String forward = "course.jsp";
+        List<CourseListBeans> courseListBeans = new ArrayList<CourseListBeans>();
+        CourseListBeans every = null;
 
         if (resultSet != null) {
             try {
                 while (resultSet.next()) {
-                    every = new UserListBeans();
+                    every = new CourseListBeans();
                     if (whileDatabase == 0) {
-                        every.setUserid(resultSet.getString("sid"));
+                        every.setCouseid(resultSet.getString("eid"));
+                        every.setCousename(resultSet.getString("cname"));
+                        every.setCouseday(resultSet.getString("day"));
                     } else {
-                        every.setUserid(resultSet.getString("id"));
+                        every.setCouseid(resultSet.getString("id"));
+                        every.setCousename(resultSet.getString("name"));
+                        every.setCouseday("未知");
                     }
-                    every.setUsername(resultSet.getString("name"));
-                    every.setSex(resultSet.getString("sex"));
-                    userListBeans.add(every);
+                    courseListBeans.add(every);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
 
-        request.setAttribute("allMember", userListBeans);
+        request.setAttribute("allCourse", courseListBeans);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(forward);
         requestDispatcher.forward(request, response);
     }

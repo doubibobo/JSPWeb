@@ -1,7 +1,6 @@
 package servlet;
 
 import Config.getEveryConfig;
-import Database.User;
 import bean.UserListBeans;
 import bean.userBeans;
 
@@ -13,16 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhuch on 2017/11/27.
+ * Created by zhuch on 2017/12/4.
  */
-@WebServlet(name = "MemberServlet")
-public class MemberServlet extends HttpServlet {
+@WebServlet(name = "PersonServlet")
+public class PersonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 设置HTTP响应的文档类型，此处为Text/html
         response.setContentType("text/html");
@@ -43,8 +41,9 @@ public class MemberServlet extends HttpServlet {
 
         int whileDatabase;
         whileDatabase = database.equals("0") ? 0 : 1;
-        ResultSet resultSet = theUser.selectAll(whileDatabase);
-        String forward = "member.jsp";
+        System.out.println(whileDatabase);
+        ResultSet resultSet = theUser.selectOne(whileDatabase, userid);
+        String forward = "person.jsp";
         List<UserListBeans> userListBeans = new ArrayList<UserListBeans>();
         UserListBeans every = null;
 
@@ -54,8 +53,14 @@ public class MemberServlet extends HttpServlet {
                     every = new UserListBeans();
                     if (whileDatabase == 0) {
                         every.setUserid(resultSet.getString("sid"));
+                        every.setQq(resultSet.getString("qq"));
+                        every.setTel(resultSet.getString("tel"));
+                        every.setProvince(resultSet.getString("province"));
                     } else {
                         every.setUserid(resultSet.getString("id"));
+                        every.setTel(resultSet.getString("tex"));
+                        every.setQq("未知");
+                        every.setProvince("未知");
                     }
                     every.setUsername(resultSet.getString("name"));
                     every.setSex(resultSet.getString("sex"));

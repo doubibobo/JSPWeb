@@ -20,4 +20,23 @@
         <servlet-name>MemberServlet</servlet-name>
         <url-pattern>/MemberServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PersonServlet</servlet-name>
+        <servlet-class>servlet.PersonServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PersonServlet</servlet-name>
+        <url-pattern>/PersonServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CourseServlet</servlet-name>
+        <servlet-class>servlet.CourseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseServlet</servlet-name>
+        <url-pattern>/CourseServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

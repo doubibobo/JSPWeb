@@ -18,12 +18,13 @@ public class userBeans {
     /**
      * 初始化构造函数
      */
-    public userBeans(String dataTable, String[] dataBase) {
+    public userBeans(String[][] dataTable, String[] dataBase) {
         super();
         thecontent = new Conn[dataBase.length];
         System.out.println(dataBase.length);
         for (int i1 = 0; i1 < dataBase.length; i1++) {
-            thecontent[i1] = new Conn(dataTable, dataBase[i1]);
+            dataTable[i1][0] =  dataTable[i1][0].replace("\"", "");
+            thecontent[i1] = new Conn(dataTable[i1][0], dataBase[i1]);
         }
     }
 
@@ -47,22 +48,36 @@ public class userBeans {
         return thecontent[which].selectAll();
     }
 
+    public ResultSet selectAllCourse(int which) {
+        return thecontent[which].selectAllCourse(which);
+    }
+
     /**
      * 查看个人信息
      * @return 返回个人信息
      */
-    public ResultSet selectOne(int which) {
-        return thecontent[which].getOne(username, "id");
+    public ResultSet selectOne(int which, String theusername) {
+        String what;
+        what = (which == 0) ? "sid" : "id";
+        return thecontent[which].getOne(theusername, what);
     }
 
     /**
      * 检查登录信息（用户名以及密码）
      * @return true或者false
      */
-    public boolean checkUser() {
+    public int checkUser() {
         ResultSet[] theResult = new ResultSet[thecontent.length];
+        String theCols = null;
         for (int i = 0; i < thecontent.length; i++) {
-            theResult[i] = thecontent[i].getOne(username, "id");
+            // 这里需要从中间件中读取相应的配置，但是……
+            if (i == 0) {
+                theCols = "sid";
+            } else {
+                theCols = "id";
+            }
+            System.out.println(theCols + theResult[i]);
+            theResult[i] = thecontent[i].getOne(username, theCols);
         }
         try {
             for (int i = 0; i < theResult.length; i++) {
@@ -73,9 +88,9 @@ public class userBeans {
                         // 得到其密码字段
                         String pwd = theResult[i].getString("password");
                         if(password.equals(pwd)){
-                            return true;
+                            return i;
                         } else {
-                            return false;
+                            return -1;
                         }
                     }
                 } else {
@@ -85,6 +100,10 @@ public class userBeans {
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return false;
+        return -1;
+    }
+
+    public ResultSet getOneItems(int which) {
+        return thecontent[which].getOne(username, "id");
     }
 }

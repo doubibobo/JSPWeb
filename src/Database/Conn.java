@@ -57,7 +57,8 @@ public class Conn {
      * @return 返回数据库中的所有信息
      */
     public ResultSet selectAll() {
-        String sql = "select * from"+this.dataTable;
+        String sql = "select * from "+this.dataTable;
+        System.out.println(sql);
         try {
             connection = DriverManager.getConnection(url, username, password);
             statement = connection.createStatement();
@@ -67,7 +68,23 @@ public class Conn {
         }
         return resultSet;
     }
-
+    public ResultSet selectAllCourse(int which) {
+        String sql;
+        if (which == 0) {
+            sql = "select * from elective_course";
+        } else {
+            sql = "select * from course";
+        }
+        System.out.println(sql);
+        try {
+            connection = DriverManager.getConnection(url, username, password);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
     /**
      * 查询数据库中的一个条目
      * @param value
@@ -75,6 +92,7 @@ public class Conn {
      * @return
      */
     public ResultSet getOne(String value, String where) {
+        System.out.println(where);
         String sql = "select * from "+this.dataTable+" where "+ where + " = " + value;
         System.out.println(sql);
         try {

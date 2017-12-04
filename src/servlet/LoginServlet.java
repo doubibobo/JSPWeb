@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -31,24 +32,27 @@ public class LoginServlet extends HttpServlet {
         String forward = "";
 
         getEveryConfig everyConfig = new getEveryConfig();
-        String[] allDbConfiger = null;
-        allDbConfiger = everyConfig.getAllDbConfiger();
+        // 所有数据库的名称信息
+        String[] allDbConfiger = everyConfig.getAllDbConfiger();
+        // 所有数据库的学生表信息
+        String[][] allStudentConfig = everyConfig.getAllCol();
 
-        for (String i:allDbConfiger) {
-            System.out.println(i);
-        }
-
-        userBeans theUser = new userBeans("student", allDbConfiger);
+        userBeans theUser = new userBeans(allStudentConfig, allDbConfiger);
         theUser.setUsername(username);
         theUser.setPassword(password);
         log(username);
         log(password);
 
-        if(theUser.checkUser()){
-            forward = "index.jsp";
+        // 数据库配置信息
+        int connectConfig = theUser.checkUser();
+        if(connectConfig >= 0){
+            forward = "main.jsp";
         } else {
             forward = "doubibobo.jsp";
         }
+        // 设置用户名专属的session值
+        request.getSession().setAttribute("userid", username);
+        request.getSession().setAttribute("database", connectConfig);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(forward);
         requestDispatcher.forward(request, response);
     }

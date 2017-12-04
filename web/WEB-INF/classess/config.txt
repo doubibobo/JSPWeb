@@ -2,17 +2,26 @@
     "student":{
             "student" => [
                     "sid", "name", "password", "sex", "qq", "tel", "province"
-                ]
+                ],
+            "student" => [
+                    "id", "name", "password", "sex", "tex"
+            ]
         },
     "course":{
             "elective_course" => [
                     "eid", "cname", "day"
-                ]
+                ],
+            "course" => [
+                    "id", "name"
+            ]
         },
     "interests":{
             "interest" => [
                     "intid", "interest"
-                ]
+                ],
+            "interest" => [
+                "stu_id", "interest"
+            ]
         },
     "character":{
             "character" => [
@@ -27,7 +36,10 @@
     "student_course":{
             "stu_ele_course" => [
                      "eid", "sid"
-                ]
+                ],
+            "stu_cou" => [
+                "cout_id", "stu_id"
+            ]
         },
     "student_interests":{
             "stu_int" => [
